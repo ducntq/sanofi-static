@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  nginx:
+    image: nginx:latest
+    restart: on-failure
+    volumes:
+      - ./src:/usr/share/nginx/html
+    ports:
+      - 8090:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.khoahocsanofi.entrypoints=websecure"
+      - "traefik.http.routers.khoahocsanofi.rule=Host(`khoahoc.hocviensanofichc.com `)"
+      - "traefik.http.routers.khoahocsanofi.service=khoahocsanofi"
+      - "traefik.http.routers.khoahocsanofi.tls=true"
+      - "traefik.http.routers.khoahocsanofi.tls.certresolver=letsencrypt"
+      - "traefik.http.services.khoahocsanofi.loadbalancer.server.port=80"
